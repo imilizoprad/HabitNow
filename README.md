@@ -147,7 +147,7 @@ To run the app locally, follow these steps:
 
 1. Clone the repository:
 ```bash
-   git clone https://github.com/your-username/habit-timer-app.git
+   git clone https://github.com/Kind-Unes/HabitNow.git
 ```
 2. Navigate to the project folder:
 ```bash
