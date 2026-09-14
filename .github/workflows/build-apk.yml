@@ -1,9 +1,25 @@
 name: Build APK (arm64)
 
-# Manual trigger — builds the release APK for android-arm64 and uploads it
-# as a workflow artifact named `habitnow-arena-arm64`.
+# Builds the release APK for android-arm64 and uploads it as a workflow
+# artifact named `habitnow-arena-arm64`.
+#
+# Triggers:
+#  - manual dispatch from the Actions tab (any branch with this file)
+#  - pushes that touch app code or this workflow (so CI stays honest)
 on:
   workflow_dispatch: {}
+  push:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/build-apk.yml'
+      - 'lib/**'
+      - 'android/**'
+      - 'pubspec.yaml'
+
+concurrency:
+  group: build-apk-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
