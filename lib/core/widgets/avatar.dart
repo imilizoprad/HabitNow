@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../data/models/common.dart';
 import '../theme/palette.dart';
-import '../../data/models/common.dart';
 import 'primitives.dart';
 
 /// Emoji avatar with a color ring — the identity system of the app.

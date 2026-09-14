@@ -170,7 +170,7 @@ class _ActiveRow extends StatelessWidget {
               ),
               StatChip(
                 icon: Icons.schedule,
-                label: daysLeft > 0 ? '$daysLeftd left' : 'Ends today',
+                label: daysLeft > 0 ? '${daysLeft}d left' : 'Ends today',
                 color: daysLeft <= 1 ? cc.warning : cc.inkMuted,
               ),
             ],

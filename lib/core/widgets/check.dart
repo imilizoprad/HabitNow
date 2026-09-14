@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'dart:ui' show PathMetric;
+import 'dart:ui' show PathMetric, PathMetrics;
 
 import 'package:flutter/material.dart';
 

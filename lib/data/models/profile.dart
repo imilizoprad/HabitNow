@@ -2,6 +2,11 @@ import 'common.dart';
 
 /// The local user. One per install; broadcast to peers during discovery.
 class Profile implements Synced {
+  @override
+  int updatedAt;
+  @override
+  String updatedBy;
+
   Profile({
     required this.id,
     required this.name,

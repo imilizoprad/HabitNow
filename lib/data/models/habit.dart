@@ -8,6 +8,11 @@ import 'common.dart';
 /// to a [Challenge] (see arena.dart), and then only their check-in ledger
 /// for the challenge window is shared — never notes or reminders.
 class Habit implements Synced {
+  @override
+  int updatedAt;
+  @override
+  String updatedBy;
+
   Habit({
     required this.id,
     required this.name,
@@ -106,6 +111,11 @@ class Habit implements Synced {
 
 /// One day's completion record for a habit. Keyed by (habitId, isoDate).
 class HabitCheckin implements Synced {
+  @override
+  int updatedAt;
+  @override
+  String updatedBy;
+
   HabitCheckin({
     required this.habitId,
     required this.dateKey,

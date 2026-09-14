@@ -128,6 +128,11 @@ extension TaskCategoryX on TaskCategory {
 
 /// A one-shot task, optionally recurring. Local-only — never synced.
 class Task implements Synced {
+  @override
+  int updatedAt;
+  @override
+  String updatedBy;
+
   Task({
     required this.id,
     required this.title,

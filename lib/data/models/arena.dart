@@ -11,6 +11,11 @@ import 'common.dart';
 /// can settle; totals are recomputed identically on each device from the
 /// merged check-in ledger, so the result always converges.
 class Challenge implements Synced {
+  @override
+  int updatedAt;
+  @override
+  String updatedBy;
+
   Challenge({
     required this.id,
     required this.name,
@@ -153,6 +158,11 @@ class Challenge implements Synced {
 
 /// A dare assigned from one friend to another — the "punishment" layer.
 class Forfeit implements Synced {
+  @override
+  int updatedAt;
+  @override
+  String updatedBy;
+
   Forfeit({
     required this.id,
     required this.text,
