@@ -58,7 +58,7 @@ jobs:
       - name: Build release APK
         run: |
           set -o pipefail
-          flutter build apk --release --target-platform android-arm64 \
+          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons \
             2>&1 | tee diag-build.log
 
       - name: List outputs
