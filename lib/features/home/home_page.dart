@@ -302,8 +302,8 @@ class HomePage extends StatelessWidget {
 
             // -- Active challenges strip -------------------------------------
             if (app.arena.activeChallenges.isNotEmpty) ...<Widget>[
-              SectionHeader('In the Arena', eyebrow: 'Challenges'),
-              const SizedBox(
+              const SectionHeader('In the Arena', eyebrow: 'Challenges'),
+              SizedBox(
                 height: 116,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,

@@ -126,7 +126,6 @@ class _FocusPageState extends State<FocusPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Entrance(
-                      index: 0,
                       child: GestureDetector(
                         onLongPress: _reset,
                         child: Pressable(

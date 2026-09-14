@@ -116,7 +116,7 @@ class AppButton extends StatelessWidget {
 enum AppButtonSize { small, regular, large }
 
 /// Unlabelled intents used by [AppButton].
-enum _Intent { primary, soft, ghost, danger }
+enum AppButtonIntent { primary, soft, ghost, danger }
 
 /// Circular icon action (app bars, cards).
 class IconCapsule extends StatelessWidget {
