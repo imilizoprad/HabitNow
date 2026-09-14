@@ -1,192 +1,134 @@
-# Habit Timer App
+# HabitNow Arena
 
-## Overview
-This Flutter app is a habit, task, and recurrent task manager with a built-in timer. It utilizes the Bloc pattern for state management and stores data using Hive, a NoSQL database.
+**A serverless, peer-to-peer competitive habit tracker for Android.**
+Build habits, challenge friends on the same network, put points on the
+line, settle in the Arena — no accounts, no servers, no cloud. Ever.
+
+```
+Today          Habits         Tasks          Arena          You
+check-ins +    streaks &      one-shot +     radar, duels,  awards,
+perfect-day    heatmaps       recurring +    league,        stats &
+ring           & stats        focus timer    forfeits       settings
+```
+
+---
+
+## How the competitive layer works (zero infrastructure)
+
+HabitNow Arena is fully **peer-to-peer**. Two phones on the same Wi-Fi
+(or one phone's hotspot) find each other and sync directly:
+
+```
+┌──────────────┐  UDP broadcast :45102 (presence, every 2.5 s) ┌──────────────┐
+│   Device A   │ ◄───────────────────────────────────────────► │   Device B   │
+│              │                                               │              │
+│  TCP :45103  │ ── hello → sync.request → sync.state ───────► │              │
+│              │ ◄───────────── checkin.delta (live) ────────  │              │
+└──────────────┘                                               └──────────────┘
+```
+
+- **Discovery** — each device announces itself with a magic-prefixed UDP
+  broadcast and keeps a freshness-TTL map of visible peers. A Wi-Fi
+  multicast lock is held on Android so local broadcasts are received.
+- **Sessions** — length-prefixed JSON frames over raw TCP, with a mutual
+  `hello` handshake and a watchdog for half-open sockets. Duplicate
+  connection races are resolved deterministically (larger device id keeps
+  the outgoing connection) so both sides converge on exactly one session.
+- **Sync** — full-state exchange on connect, then live deltas. Every
+  shared entity carries `updatedAt`/`updatedBy`; conflict resolution is
+  last-write-wins with a deterministic device-id tiebreak, so all peers
+  converge to identical state with no central arbiter.
+- **Trust** — peers only accept challenges/forfeits that involve them, and
+  only merge check-ins scoped to the *other* device's actor id. Your
+  private habits, notes and tasks never leave the device.
+
+### Why settlement is trustworthy without a server
+
+Challenge totals are computed by a pure, deterministic `ScoreEngine`
+(`lib/data/score_engine.dart`) that runs **identically on both devices**
+over the merged check-in ledger. Because the inputs converge and the
+functions are total, both phones independently derive the same winner —
+that's what makes "winner takes the stake" safe without a referee.
+
+## Punishments, both kinds
+
+1. **Stakes** — every duel puts points on the line (`+stake` winner,
+   `−stake` loser, draws refund). Stakes feed the weekly league and the
+   all-time scoreboard via an append-only scoring ledger.
+2. **Forfeits** — the winner can assign a real-world dare ("no sugar for
+   3 days"). The bearer serves it, the assigner confirms over the wire,
+   and missed deadlines auto-fail (−20) on both devices.
 
 ## Features
-- Manage habits, tasks, and recurrent tasks
-- Integrated timer for tracking task duration
-- Bloc pattern for efficient state management
-- Hive NoSQL Database for data persistence
 
-## Screenshots
-<table>
-  <tr>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504896_y.jpg" width="150" alt="Screenshot 1">
-      <br>
-      Screenshot 1
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504897_y.jpg" width="150" alt="Screenshot 2">
-      <br>
-      Screenshot 2
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504898_y.jpg" width="150" alt="Screenshot 3">
-      <br>
-      Screenshot 3
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504899_y.jpg" width="150" alt="Screenshot 4">
-      <br>
-      Screenshot 4
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504900_y.jpg" width="150" alt="Screenshot 5">
-      <br>
-      Screenshot 5
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504901_y.jpg" width="150" alt="Screenshot 6">
-      <br>
-      Screenshot 6
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504902_y.jpg" width="150" alt="Screenshot 7">
-      <br>
-      Screenshot 7
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504903_y.jpg" width="150" alt="Screenshot 8">
-      <br>
-      Screenshot 8
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504904_y.jpg" width="150" alt="Screenshot 9">
-      <br>
-      Screenshot 9
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504905_y.jpg" width="150" alt="Screenshot 10">
-      <br>
-      Screenshot 10
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504906_y.jpg" width="150" alt="Screenshot 11">
-      <br>
-      Screenshot 11
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504907_y.jpg" width="150" alt="Screenshot 12">
-      <br>
-      Screenshot 12
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504908_y.jpg" width="150" alt="Screenshot 13">
-      <br>
-      Screenshot 13
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504909_y.jpg" width="150" alt="Screenshot 14">
-      <br>
-      Screenshot 14
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504910_y.jpg" width="150" alt="Screenshot 15">
-      <br>
-      Screenshot 15
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504911_y.jpg" width="150" alt="Screenshot 16">
-      <br>
-      Screenshot 16
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504912_y.jpg" width="150" alt="Screenshot 17">
-      <br>
-      Screenshot 17
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504913_y.jpg" width="150" alt="Screenshot 18">
-      <br>
-      Screenshot 18
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504914_y.jpg" width="150" alt="Screenshot 19">
-      <br>
-      Screenshot 19
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504915_y.jpg" width="150" alt="Screenshot 20">
-      <br>
-      Screenshot 20
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504916_y.jpg" width="150" alt="Screenshot 21">
-      <br>
-      Screenshot 21
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504917_y.jpg" width="150" alt="Screenshot 22">
-      <br>
-      Screenshot 22
-    </td>
-    <td align="center">
-      <img src="screenshots/photo_5920336200055504918_y.jpg" width="150" alt="Screenshot 23">
-      <br>
-      Screenshot 23
-    </td>
-    <!-- Add more columns if needed -->
-  </tr>
-</table>
+- **Habits** — weekday cadences, reminders (exact alarms, reboot-safe via
+  `BOOT_COMPLETED` restore), 16-week GitHub-style heatmap, streaks,
+  best-streak, 30-day consistency rate.
+- **Today** — animated completion ring, perfect-day streak, forfeit
+  alerts, pending invites, live duel mini-cards.
+- **Tasks** — one-shot + recurring (daily / chosen days / every N days),
+  priorities, categories, swipe-to-delete with undo.
+- **Focus timer** — tap-to-start ring from the original HabitNow,
+  redesigned; sessions are logged and feed awards.
+- **Awards** — 12 milestones with a celebration overlay + confetti.
+- **Light & dark themes** — warm-paper light, blue-shifted dark, tuned
+  type scale, tabular numerals for counters, one motion language.
 
+## Building (arm64-v8a)
 
-## Getting Started
-To run the app locally, follow these steps:
-
-1. Clone the repository:
 ```bash
-   git clone https://github.com/Kind-Unes/HabitNow.git
-```
-2. Navigate to the project folder:
-```bash
-Copy code
-cd habit-timer-app
-```
-3. Install dependencies:
-```bash
-Copy code
 flutter pub get
+flutter build apk --release --target-platform android-arm64
+# → build/app/outputs/flutter-apk/app-release.apk
 ```
-4. Run the app:
 
-```bash
-Copy code
-flutter run
+The Android project is pre-configured for `arm64-v8a` only
+(`ndk.abiFilters` in `android/app/build.gradle`), AGP 8.7 / Gradle 8.12 /
+Kotlin 2.0, `minSdk 24`, `targetSdk 35`. Release builds sign with the
+debug keystore for frictionless installs — add your own `signingConfig`
+before any store upload.
+
+Requirements: Flutter 3.38+ (Dart 3.6+). The codebase has **zero
+third-party pub dependencies** — networking is pure `dart:io`, persistence
+is a purpose-built platform channel — so builds are fully reproducible.
+
+## Architecture
+
 ```
-## Dependencies
+lib/
+├── main.dart                 entry point
+├── app.dart                  MaterialApp, AppScope (InheritedNotifier DI)
+├── app_routes.dart           named routes + house page transition
+├── core/
+│   ├── theme/                design tokens, palette (ThemeExtension), type, ThemeData
+│   ├── widgets/              AppButton, AppCard, AnimatedCheck, ProgressRing,
+│   │                         DuelBar, heatmap, sheets, toasts, confetti…
+│   ├── p2p/                  protocol framing, UDP discovery, TCP sessions, sync engine
+│   ├── storage/              atomic JSON persistence via platform channel
+│   ├── native/               reminders bridge
+│   └── utils/                dates, ids, haptics
+├── data/
+│   ├── models/               Profile, Habit(+checkins), Task, Challenge, Forfeit, Ledger
+│   ├── local_db.dart         in-memory store + debounced JSON persistence
+│   ├── score_engine.dart     deterministic scoring/settlement math
+│   └── seed.dart             first-run content
+├── state/                    AppStore → HabitStore / TaskStore / ArenaStore
+└── features/                 one folder per tab + sheets & detail pages
+```
 
-## Dependencies
-- Flutter
-- Dart
-- Bloc
-- Hive
+State management is plain `ChangeNotifier` + `InheritedNotifier` — no
+codegen, no streams, surgical rebuilds. Every widget that listens,
+listens to the narrowest store that can change.
 
-## Contributing
+## Testing two devices
 
-Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
-
-1. **Fork the repository.**
-2. **Create a new branch for your feature/bugfix:** `git checkout -b feature-name`
-3. **Make your changes and commit them:** `git commit -m 'Description of changes'`
-4. **Push to the branch:** `git push origin feature-name`
-5. **Open a pull request.**
+1. Install the APK on two phones.
+2. Put them on the same Wi-Fi (or start a hotspot from one and join from
+   the other). AP-isolated guest networks won't work.
+3. Open the app on both — each appears in the other's **Arena → Radar**.
+4. Tap **Connect**, then **Duel ⚔️**: pick the shared habit, stake and
+   length. Accept on the second phone and check in daily.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgments
-
-Thanks to the Flutter, Bloc, and Hive communities for providing excellent tools and documentation.
+MIT — inherited from the base project.
