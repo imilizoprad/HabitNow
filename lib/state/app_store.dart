@@ -83,9 +83,13 @@ class AppStore extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> _startEngine() async {
-    final Profile me = db.profile!;
+    // Read the profile fresh on every call — edits (rename/re-avatar) must
+    // broadcast on the next advertisement, not stay pinned to a snapshot.
     final SyncEngine e = SyncEngine(
-      me: () => ProfileWire(me.id, me.name, me.emoji, me.colorSeed),
+      me: () {
+        final Profile p = db.profile!;
+        return ProfileWire(p.id, p.name, p.emoji, p.colorSeed);
+      },
     );
     e.collectSyncState = arena.collectSyncState;
     e.applyRemote = applyRemote;
@@ -99,7 +103,7 @@ class AppStore extends ChangeNotifier with WidgetsBindingObserver {
       }
     };
     engine = e;
-    await e.start();
+    networkDegraded = !await e.start();
     arena.refreshPresence();
   }
 

@@ -49,8 +49,10 @@ class SyncEngine {
 
   PeerSession? sessionTo(String peerId) => _sessions[peerId];
 
-  Future<void> start() async {
-    await server.start();
+  /// Returns true when the session server bound its port (false = another
+  /// instance holds it; discovery + outgoing dials still work).
+  Future<bool> start() async {
+    final bool bound = await server.start();
     await discovery.start();
     _discoverySub = discovery.changes.listen((_) {
       onPeersChanged?.call();
@@ -61,6 +63,7 @@ class SyncEngine {
       onPeersChanged?.call();
     });
     _autoConnectVisible();
+    return bound;
   }
 
   void _accept(PeerSession s) {
