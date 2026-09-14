@@ -1,11 +1,12 @@
 name: Build APK (arm64)
 
-# Builds the release APK for android-arm64 and uploads it as a workflow
-# artifact named `habitnow-arena-arm64`.
+# Builds the release APK for android-arm64.
 #
-# Triggers:
-#  - manual dispatch from the Actions tab (any branch with this file)
-#  - pushes that touch app code or this workflow (so CI stays honest)
+# Delivery contract (sandbox-friendly):
+#  - success → APK is committed to the `build-artifacts` branch, uploaded as
+#    a workflow artifact, and attached to the `latest` release
+#  - failure → build/analyze/doctor logs are committed to `build-artifacts`
+#    so tooling can fetch them over plain git
 on:
   workflow_dispatch: {}
   push:
@@ -20,6 +21,9 @@ on:
 concurrency:
   group: build-apk-${{ github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -43,22 +47,56 @@ jobs:
           flutter-version: 3.38.10
           cache: true
 
-      - name: Flutter doctor (toolchain visibility)
-        run: flutter doctor -v
-
       - name: Resolve dependencies
         run: flutter pub get
 
-      - name: Static analysis (does not fail the build)
-        run: flutter analyze
-        continue-on-error: true
+      - name: Static analysis
+        run: |
+          set -o pipefail
+          flutter analyze 2>&1 | tee diag-analyze.log
 
       - name: Build release APK
-        run: flutter build apk --release --target-platform android-arm64
+        run: |
+          set -o pipefail
+          flutter build apk --release --target-platform android-arm64 \
+            2>&1 | tee diag-build.log
+
+      - name: List outputs
+        run: ls -la build/app/outputs/flutter-apk/
+
+      # ---- delivery -------------------------------------------------------
+      - name: Commit artifacts / diagnostics to build-artifacts branch
+        if: always()
+        run: |
+          git config user.name  "ci-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -B build-artifacts
+          mkdir -p ci
+          flutter doctor -v > ci/doctor.log 2>&1 || true
+          if [ -f diag-analyze.log ]; then cp diag-analyze.log ci/analyze.log; fi
+          if [ -f diag-build.log ];   then cp diag-build.log   ci/build.log;   fi
+          APK=build/app/outputs/flutter-apk/app-release.apk
+          if [ -f "$APK" ]; then cp "$APK" ci/app-release-arm64.apk; fi
+          git add -f ci/
+          git commit -m "ci: artifacts from run ${GITHUB_RUN_ID}" || true
+          git push -f origin build-artifacts
 
       - name: Upload APK artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: habitnow-arena-arm64
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
+
+      - name: Attach to release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest \
+            --title "HabitNow Arena — latest arm64 build" \
+            --notes "Automated build from commit ${GITHUB_SHA::7} on branch ${GITHUB_REF_NAME}.
+          Install: download app-release-arm64.apk on your Android phone and open it (allow installs from this source). Debug-signed; for personal use." \
+            build/app/outputs/flutter-apk/app-release.apk#HabitNow-Arena-arm64.apk
