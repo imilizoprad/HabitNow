@@ -108,7 +108,7 @@ class _HeatPainter extends CustomPainter {
             ..style = PaintingStyle.stroke
             ..strokeWidth = 1.4
             ..color = todayOutline;
-          canvas.drawRRect(rrect.deflate(0.7), outline);
+          canvas.drawRRect(rrect, outline);
         }
       }
     }

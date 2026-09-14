@@ -1,0 +1,48 @@
+name: Build APK (arm64)
+
+# Manual trigger — builds the release APK for android-arm64 and uploads it
+# as a workflow artifact named `habitnow-arena-arm64`.
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    name: Release APK (android-arm64)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Java 17 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter 3.38.10 (stable)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.38.10
+          cache: true
+
+      - name: Flutter doctor (toolchain visibility)
+        run: flutter doctor -v
+
+      - name: Resolve dependencies
+        run: flutter pub get
+
+      - name: Static analysis (does not fail the build)
+        run: flutter analyze
+        continue-on-error: true
+
+      - name: Build release APK
+        run: flutter build apk --release --target-platform android-arm64
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: habitnow-arena-arm64
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
