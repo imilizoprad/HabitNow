@@ -1,7 +1,7 @@
 import 'common.dart';
 
 /// The local user. One per install; broadcast to peers during discovery.
-class Profile with Synced {
+class Profile implements Synced {
   Profile({
     required this.id,
     required this.name,

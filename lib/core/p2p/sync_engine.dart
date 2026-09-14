@@ -34,7 +34,7 @@ class SyncEngine {
   /// Live peer bookkeeping surfaced to the UI.
   void Function()? onPeersChanged;
 
-  final PeerDiscovery discovery = PeerDiscovery(() => me());
+  late final PeerDiscovery discovery = PeerDiscovery(me);
   late final PeerServer server = PeerServer(_accept);
 
   final Map<String, PeerSession> _sessions = <String, PeerSession>{};

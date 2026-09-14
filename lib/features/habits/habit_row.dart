@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/design_tokens.dart';
+import '../../core/utils/date_x.dart';
 import '../../core/theme/palette.dart';
 import '../../core/widgets/check.dart';
 import '../../core/widgets/heatmap.dart' show HabitHeatmap;
 import '../../data/models/common.dart';
 import '../../data/models/habit.dart';
-import '../../data/score_engine.dart';
 import '../../state/app_store.dart';
 
 /// The reusable habit row: icon tile, name, cadence, streak, check target.

@@ -84,7 +84,6 @@ abstract final class Elev {
         blurRadius: blur.toDouble(),
         spreadRadius: spread,
         offset: Offset(0, dy.toDouble()),
-        blurStyle: BlurStyle.normal,
       ),
     ];
   }

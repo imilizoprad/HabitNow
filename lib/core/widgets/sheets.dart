@@ -89,7 +89,6 @@ class SheetScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColors c = context.colors;
     return ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.88,

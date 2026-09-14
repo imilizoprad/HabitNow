@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/design_tokens.dart';
+import '../../data/models/common.dart';
 import '../theme/palette.dart';
 import '../../data/models/common.dart';
 import 'primitives.dart';

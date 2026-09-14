@@ -12,7 +12,6 @@ import '../../core/widgets/sheets.dart';
 import '../../core/widgets/text_field.dart';
 import '../../core/widgets/toast.dart';
 import '../../data/models/arena.dart';
-import '../../data/models/profile.dart';
 import '../../state/app_store.dart';
 
 /// Preset dares — playful but humane, editable before sending.

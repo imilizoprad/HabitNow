@@ -139,9 +139,9 @@ class _CheckPainter extends CustomPainter {
         ..moveTo(center.dx - r * 0.42, center.dy + r * 0.02)
         ..lineTo(center.dx - r * 0.1, center.dy + r * 0.34)
         ..lineTo(center.dx + r * 0.46, center.dy - r * 0.3);
-      final PathMetric metric =
-          p.computeMetrics().isEmpty ? null : p.computeMetrics().first;
-      if (metric != null) {
+      final PathMetrics metrics = p.computeMetrics();
+      if (metrics.isNotEmpty) {
+        final PathMetric metric = metrics.first;
         canvas.drawPath(metric.extractPath(0, metric.length * tickT), tick);
       }
     }

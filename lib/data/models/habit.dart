@@ -7,7 +7,7 @@ import 'common.dart';
 /// Habits are private by default; they only cross the network when attached
 /// to a [Challenge] (see arena.dart), and then only their check-in ledger
 /// for the challenge window is shared — never notes or reminders.
-class Habit with Synced {
+class Habit implements Synced {
   Habit({
     required this.id,
     required this.name,
@@ -105,7 +105,7 @@ class Habit with Synced {
 }
 
 /// One day's completion record for a habit. Keyed by (habitId, isoDate).
-class HabitCheckin with Synced {
+class HabitCheckin implements Synced {
   HabitCheckin({
     required this.habitId,
     required this.dateKey,

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/foundation.dart';
 
 import '../core/p2p/discovery.dart';
@@ -203,20 +205,20 @@ class ArenaStore extends ChangeNotifier {
     if (nowDone) {
       final Set<String> keys = _habits.myDoneKeys();
       final int streak = ScoreEngine.streakToday(habit, keys, actor: meId);
-      _addEntry(_me, Scoring.checkin, 'checkin', dateKey, habit.id);
+      _addEntry(meId, Scoring.checkin, 'checkin', dateKey, habit.id);
       final int bonus = Scoring.streakBonus(streak);
       if (bonus > 0) {
-        _addEntry(_me, bonus, 'streak', dateKey, habit.id);
+        _addEntry(meId, bonus, 'streak', dateKey, habit.id);
       }
       if (_habits.isDoneOnToday(DateTime.now())) {
-        _addEntry(_me, Scoring.perfectDay, 'perfectDay', dateKey, null);
+        _addEntry(meId, Scoring.perfectDay, 'perfectDay', dateKey, null);
       }
       // Morning check-ins: award fuel.
       if (DateTime.now().hour < 8) _evaluateAwards();
       _evaluateAwards();
     } else {
-      _removeEntries(_me, dateKey, habit.id, <String>['checkin', 'streak']);
-      _removeEntries(_me, dateKey, null, <String>['perfectDay']);
+      _removeEntries(meId, dateKey, habit.id, <String>['checkin', 'streak']);
+      _removeEntries(meId, dateKey, null, <String>['perfectDay']);
     }
   }
 
@@ -443,7 +445,6 @@ class ArenaStore extends ChangeNotifier {
       changed = true;
       // Each device writes only its own ledger entries; the union is the
       // shared scoreboard. That's what keeps settlement serverless yet safe.
-      final int myTotal = totals[meId] ?? 0;
       final String today = now.isoDate;
       if (result.$1 == null) {
         // draw — stakes stay with their owners, nothing to book
@@ -454,13 +455,13 @@ class ArenaStore extends ChangeNotifier {
       }
       if (result.$1 == meId) {
         pushEvent(ArenaEvent('win', '🏆',
-            'You won "\${c.name}"', body: '+\${c.stake} points'));
+            'You won "${c.name}"', body: '+${c.stake} points'));
       } else if (result.$1 == null) {
         pushEvent(ArenaEvent('draw', '🤝',
-            '"\${c.name}" ended in a draw'));
+            '"${c.name}" ended in a draw'));
       } else {
         pushEvent(ArenaEvent('loss', '🎯',
-            '"\${c.name}" went to \${identityOf(result.$1!).$1}',
+            '"${c.name}" went to ${identityOf(result.$1!).$1}',
             body: 'Stake settled'));
       }
       _evaluateAwards();
@@ -651,8 +652,8 @@ class ArenaStore extends ChangeNotifier {
     }
     final dynamic cks = msg['checkins'];
     if (cks is Map<String, dynamic>) {
-      for (final Map<String, dynamic> v in cks.values) {
-        _habits.mergeCheckin(v);
+      for (final dynamic v in cks.values) {
+        if (v is Map<String, dynamic>) _habits.mergeCheckin(v);
       }
     }
     for (final Map<String, dynamic> cj in _castList(msg['challenges'])) {

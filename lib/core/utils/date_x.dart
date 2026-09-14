@@ -2,11 +2,6 @@
 /// actually need, tuned for habit-tracking semantics.
 library;
 
-const List<String> _months = <String>[
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
-];
-
 const List<String> _monthsShort = <String>[
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',

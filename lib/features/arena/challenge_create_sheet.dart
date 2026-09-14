@@ -41,7 +41,6 @@ class _OpponentPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColors c = context.colors;
     final AppStore app = AppScope.of(context);
     final Map<String, VisiblePeer> visible = app.arena.visible;
     final List<FriendRecord> friends = app.arena.friends;

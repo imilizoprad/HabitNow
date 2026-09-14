@@ -38,7 +38,7 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
       TextEditingController(text: widget.existing?.note ?? '');
   late Priority _priority = widget.existing?.priority ?? Priority.none;
   late TaskCategory _category = widget.existing?.category ?? TaskCategory.personal;
-  DateTime? _due = widget.existing?.due;
+  late DateTime? _due = widget.existing?.due;
   late Recurrence? _recurrence = widget.existing?.recurrence;
   late Set<int> _recDays = _recurrence?.days.toSet() ?? const <int>{};
   late int _recN = _recurrence?.n ?? 2;

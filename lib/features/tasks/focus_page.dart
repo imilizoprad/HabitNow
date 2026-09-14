@@ -39,15 +39,6 @@ class _FocusPageState extends State<FocusPage> {
       TextEditingController(text: widget.label ?? 'Focus');
   String? get _habitId => widget.habitId;
 
-  @override
-  void initState() {
-    super.initState();
-    _labelCtrl.addListener(() {
-      // Sync without rebuilding — the timer keeps ticking independently.
-      _label = _labelCtrl.text;
-    });
-  }
-
   String get _label => _labelCtrl.text;
 
   @override

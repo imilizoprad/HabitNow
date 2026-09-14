@@ -4,7 +4,6 @@ import '../../app.dart';
 
 import '../../core/theme/design_tokens.dart';
 import '../../core/theme/palette.dart';
-import '../../core/widgets/primitives.dart';
 import '../../state/app_store.dart';
 import 'challenges_tab.dart';
 import 'friends_tab.dart';

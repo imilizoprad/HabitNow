@@ -26,16 +26,16 @@ class FocusRouteArgs {
 /// All detail routes push with the house fade-through transition.
 Route<dynamic>? appOnGenerateRoute(RouteSettings settings) {
   final WidgetBuilder? builder = switch (settings.name) {
-    '/habit' => () {
+    '/habit' => (BuildContext context) {
         final HabitRouteArgs a = settings.arguments! as HabitRouteArgs;
         return HabitDetailPage(habitId: a.habitId);
       },
-    '/challenge' => () {
+    '/challenge' => (BuildContext context) {
         final ChallengeRouteArgs a =
             settings.arguments! as ChallengeRouteArgs;
         return ChallengeDetailPage(challengeId: a.challengeId);
       },
-    '/focus' => () {
+    '/focus' => (BuildContext context) {
         final FocusRouteArgs a =
             settings.arguments as FocusRouteArgs? ?? const FocusRouteArgs();
         return FocusPage(
@@ -53,16 +53,15 @@ Route<dynamic>? appOnGenerateRoute(RouteSettings settings) {
 /// The house page transition: incoming fades + scales up from 96%,
 /// outgoing fades out — calm, premium, never bouncy.
 class FadeThroughRoute<T> extends PageRouteBuilder<T> {
-  FadeThroughRoute({required WidgetBuilder builder, RouteSettings? settings})
+  FadeThroughRoute({required WidgetBuilder builder, super.settings})
       : super(
-          settings: settings,
           transitionDuration: Motion.slow,
           reverseTransitionDuration: Motion.base,
-          pageBuilder: (BuildContext _, Animation<double> __,
+          pageBuilder: (BuildContext routeContext, Animation<double> __,
                   Animation<double> ___) =>
-              builder(_),
+              builder(routeContext),
           transitionsBuilder: (
-            BuildContext _,
+            BuildContext routeContext,
             Animation<double> animation,
             Animation<double> secondary,
             Widget child,

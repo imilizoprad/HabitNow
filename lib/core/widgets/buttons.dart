@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../theme/design_tokens.dart';
 import '../theme/palette.dart';
-import '../utils/haptics.dart';
 import 'primitives.dart';
 
 /// The button system: one widget, four intents, three sizes.

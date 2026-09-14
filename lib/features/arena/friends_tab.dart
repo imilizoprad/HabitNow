@@ -10,7 +10,6 @@ import '../../core/widgets/avatar.dart';
 import '../../core/widgets/buttons.dart';
 import '../../core/widgets/entrance.dart';
 import '../../core/widgets/primitives.dart';
-import '../../core/widgets/sheets.dart';
 import '../../core/widgets/toast.dart';
 import '../../data/models/profile.dart';
 import '../../state/app_store.dart';
@@ -27,7 +26,6 @@ class FriendsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColors c = context.colors;
     final AppStore app = AppScope.of(context);
     final Map<String, VisiblePeer> visible = app.arena.visible;
     final Set<String> connected = app.arena.connected;

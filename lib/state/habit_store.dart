@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 
-import '../core/p2p/protocol.dart';
 import '../core/utils/date_x.dart';
 import '../core/utils/ids.dart';
 import '../data/local_db.dart';

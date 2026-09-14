@@ -15,7 +15,9 @@ class PeerSession {
     _reader = FrameReader();
     _socket
       ..setOption(SocketOption.tcpNoDelay, true)
-      .listen(_onData, onError: (Object e) => close(), onDone: close,
+      ..listen(_onData,
+          onError: (Object e) => close(),
+          onDone: close,
           cancelOnError: true);
     // Handshake watchdog.
     Timer(const Duration(seconds: 6), () {

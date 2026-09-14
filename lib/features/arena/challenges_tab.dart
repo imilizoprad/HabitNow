@@ -23,7 +23,6 @@ class ChallengesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColors c = context.colors;
     final AppStore app = AppScope.of(context);
     final List<Challenge> invites = app.arena.pendingInvites;
     final List<Challenge> active = app.arena.activeChallenges;

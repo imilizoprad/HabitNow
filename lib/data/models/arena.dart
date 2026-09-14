@@ -10,7 +10,7 @@ import 'common.dart';
 /// devices and flips to [statusActive]. When the window ends, either peer
 /// can settle; totals are recomputed identically on each device from the
 /// merged check-in ledger, so the result always converges.
-class Challenge with Synced {
+class Challenge implements Synced {
   Challenge({
     required this.id,
     required this.name,
@@ -152,7 +152,7 @@ class Challenge with Synced {
 }
 
 /// A dare assigned from one friend to another — the "punishment" layer.
-class Forfeit with Synced {
+class Forfeit implements Synced {
   Forfeit({
     required this.id,
     required this.text,

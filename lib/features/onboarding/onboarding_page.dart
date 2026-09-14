@@ -9,7 +9,14 @@ import '../../core/widgets/buttons.dart';
 import '../../core/widgets/entrance.dart';
 import '../../core/widgets/primitives.dart';
 import '../../core/widgets/text_field.dart';
+import '../../app.dart';
 import '../../state/app_store.dart';
+
+/// Avatar faces offered during onboarding and profile editing.
+const List<String> kEmojiChoices = <String>[
+  '🦁', '🐯', '🐻', '🐼', '🦊', '🐨', '🐸', '🦉', '🐙', '🦄',
+  '🐺', '🦖', '🐝', '🦋', '🐢', '🦩', '🐳', '🌟',
+];
 
 /// Three-step onboarding: welcome → identity (name/emoji/color) → go.
 /// Deliberately skippable-fast: one tap through if you're eager.
@@ -28,11 +35,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int _step = 0;
   String _emoji = '🦁';
   int _seed = 0;
-
-  static const List<String> _emojiChoices = <String>[
-    '🦁', '🐯', '🐻', '🐼', '🦊', '🐨', '🐸', '🦉', '🐙', '🦄',
-    '🐺', '🦖', '🐝', '🦋', '🐢', '🦩', '🐳', '🌟',
-  ];
 
   @override
   void dispose() {
@@ -269,7 +271,7 @@ class _IdentityStep extends StatelessWidget {
             spacing: Sp.sm,
             runSpacing: Sp.sm,
             children: <Widget>[
-              for (final String e in _emojiChoices)
+              for (final String e in kEmojiChoices)
                 Pressable(
                   onTap: () => onEmoji(e),
                   child: AnimatedContainer(

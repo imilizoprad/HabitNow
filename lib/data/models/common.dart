@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart' show Color;
 
-/// Mixin for entities that participate in peer-to-peer sync.
+/// Contract for entities that participate in peer-to-peer sync.
 ///
 /// Every shared entity is stamped with when it last changed and by which
 /// device. Conflict resolution is deterministic last-write-wins: newer
 /// timestamp wins, and a lexicographic device-id tiebreak guarantees all
 /// peers converge to the same value even on identical timestamps.
-mixin Synced {
-  int updatedAt;
-  String updatedBy;
+///
+/// (An interface, not a mixin: initializing formals may only target fields
+/// declared in the same class, and every model owns its stamp fields.)
+abstract interface class Synced {
+  abstract int updatedAt;
+  abstract String updatedBy;
+}
 
+extension SyncedX on Synced {
   /// True when [otherStamp]/[otherActor] should replace this record.
   bool supersedes(int otherStamp, String otherActor) {
     if (otherStamp != updatedAt) return otherStamp > updatedAt;

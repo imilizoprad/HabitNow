@@ -8,7 +8,6 @@ import '../../core/widgets/avatar.dart';
 import '../../core/widgets/buttons.dart';
 import '../../core/widgets/primitives.dart';
 import '../../core/widgets/progress.dart';
-import '../../core/widgets/toast.dart';
 import '../../data/models/arena.dart';
 import '../../data/models/common.dart';
 import '../../state/app_store.dart';
@@ -444,7 +443,7 @@ class _SettlementCard extends StatelessWidget {
             ? (c.success, c.successSoft, '🏆',
                 'You won +${ch.stake} points')
             : (c.danger, c.dangerSoft, '🎯',
-                '\${app.arena.identityOf(ch.winnerId!).$1} took it (−\${ch.stake} pts)');
+                '${app.arena.identityOf(ch.winnerId!).$1} took it (−${ch.stake} pts)');
 
     return Container(
       padding: const EdgeInsets.all(Sp.xl),

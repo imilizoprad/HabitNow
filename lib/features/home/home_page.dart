@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app.dart';
 import '../../app_routes.dart';
 import '../../core/theme/design_tokens.dart';
+import '../../core/widgets/avatar.dart';
 import '../../core/theme/palette.dart';
 import '../../core/utils/date_x.dart';
 import '../../core/widgets/buttons.dart';
@@ -12,6 +13,7 @@ import '../../core/widgets/progress.dart';
 import '../../core/widgets/sheets.dart';
 import '../../core/widgets/toast.dart';
 import '../../data/models/arena.dart';
+import '../../data/models/common.dart';
 import '../../state/app_store.dart';
 import '../../state/arena_store.dart' show ArenaEvent;
 import '../habits/habit_row.dart';
@@ -326,7 +328,7 @@ class HomePage extends StatelessWidget {
 
   Future<void> _serveForfeit(
       BuildContext context, AppStore app, Forfeit f) async {
-    await showAppSheet(
+    await showAppSheet<void>(
       context: context,
       builder: (BuildContext ctx) => _ServeForfeitSheet(forfeit: f, app: app),
     );

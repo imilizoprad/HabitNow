@@ -127,7 +127,7 @@ extension TaskCategoryX on TaskCategory {
 }
 
 /// A one-shot task, optionally recurring. Local-only — never synced.
-class Task with Synced {
+class Task implements Synced {
   Task({
     required this.id,
     required this.title,

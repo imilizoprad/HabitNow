@@ -63,11 +63,7 @@ class PeerDiscovery {
     if (_socket != null) return;
     try {
       _socket = await RawDatagramSocket.bind(
-        InternetAddress.anyIPv4,
-        Protocol.discoveryPort,
-        reuseAddress: true,
-        reusePort: false,
-      );
+          InternetAddress.anyIPv4, Protocol.discoveryPort);
     } on SocketException {
       // Port taken (e.g. two instances on one device): run listen-only.
       try {

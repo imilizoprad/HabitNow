@@ -24,7 +24,6 @@ class HabitsPage extends StatelessWidget {
     final AppStore app = AppScope.of(context);
     final List<Habit> active = app.habits.active;
     final List<Habit> archived = app.habits.archived;
-    final DateTime now = DateTime.now();
 
     return SafeArea(
       bottom: false,
@@ -163,7 +162,6 @@ class _HabitActionSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppColors c = context.colors;
-    final AppStore app = AppScope.of(context);
     final bool shared = habit.challengeId != null;
     final List<({String icon, String label, String value})> options =
         <({String icon, String label, String value})>[
