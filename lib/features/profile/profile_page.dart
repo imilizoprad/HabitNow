@@ -226,7 +226,7 @@ class ProfilePage extends StatelessWidget {
     final TextEditingController name = TextEditingController(text: profile.name);
     String emoji = profile.emoji;
     int seed = profile.colorSeed;
-    final bool? saved = await showAppSheet<bool>(
+    await showAppSheet<bool>(
       context: context,
       builder: (BuildContext ctx) => StatefulBuilder(
         builder: (BuildContext ctx, void Function(void Function()) setSheetState) {
@@ -315,9 +315,6 @@ class ProfilePage extends StatelessWidget {
       ),
     );
     name.dispose();
-    if (saved == true) {
-      // store already notified
-    }
   }
 }
 

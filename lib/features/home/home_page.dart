@@ -75,9 +75,8 @@ class HomePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          DateTime.now().weekdayFull +
-                              ', ' +
-                              DateTime.now().medium,
+                          '${DateTime.now().weekdayFull}, '
+                          '${DateTime.now().medium}',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
