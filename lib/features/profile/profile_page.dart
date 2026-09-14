@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import '../../app.dart';
 import '../../core/theme/design_tokens.dart';
 import '../../core/theme/palette.dart';
+import '../../core/utils/haptics.dart';
 import '../../core/widgets/avatar.dart';
 import '../../core/widgets/buttons.dart';
 import '../../core/widgets/entrance.dart';
 import '../../core/widgets/primitives.dart';
 import '../../core/widgets/sheets.dart';
+import '../../core/widgets/text_field.dart';
 import '../../core/widgets/toast.dart';
 import '../../data/models/arena.dart';
 import '../../data/models/common.dart';
-import '../../state/app_store.dart';
-import '../../core/utils/haptics.dart';
-import '../../core/widgets/text_field.dart';
 import '../../data/models/habit.dart';
+import '../../state/app_store.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -45,7 +45,6 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(height: Sp.xl),
           Center(
             child: Entrance(
-              index: 0,
               child: Column(
                 children: <Widget>[
                   EmojiAvatar(profile.emoji,
@@ -74,11 +73,11 @@ class ProfilePage extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     _Stat(value: points, label: 'points', color: c.gold),
-                    _VLine(),
+                    const _VLine(),
                     _Stat(value: wins, label: 'duels won', color: c.success),
-                    _VLine(),
+                    const _VLine(),
                     _Stat(value: bestStreak, label: 'best streak', color: c.flame),
-                    _VLine(),
+                    const _VLine(),
                     _Stat(
                         value: unlocked,
                         label: 'awards',
@@ -168,7 +167,7 @@ class ProfilePage extends StatelessWidget {
                       label: 'Haptics',
                       child: Switch(
                         value: app.hapticsEnabled,
-                        onChanged: (bool v) => app.setHapticsEnabled(v),
+                        onChanged: app.setHapticsEnabled,
                       ),
                     ),
                     const Divider(),

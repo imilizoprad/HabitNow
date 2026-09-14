@@ -12,9 +12,9 @@ import 'arena/challenge_create_sheet.dart';
 import 'habits/habits_page.dart';
 import 'habits/habit_editor.dart';
 import 'home/home_page.dart';
-import 'tasks/tasks_page.dart';
-import 'tasks/task_editor.dart';
 import 'profile/profile_page.dart';
+import 'tasks/task_editor.dart';
+import 'tasks/tasks_page.dart';
 
 /// Root scaffold: fade-through page switcher + custom nav rail + a single
 /// "create" button that opens the context-aware creation sheet.
@@ -213,8 +213,6 @@ class _CreateSheet extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: Sp.md),
               child: AppCard(
                 onTap: () => Navigator.of(context).pop(o.choice),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: Sp.lg, vertical: Sp.lg),
                 child: Row(
                   children: <Widget>[
                     Container(

@@ -58,7 +58,7 @@ class AppTextField extends StatelessWidget {
                 child: prefix!,
               ),
         prefixIconConstraints:
-            const BoxConstraints(minWidth: 0, minHeight: 0),
+            const BoxConstraints(),
         filled: true,
         fillColor: c.surface,
         contentPadding:

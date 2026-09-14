@@ -157,7 +157,6 @@ class ChallengeDetailPage extends StatelessWidget {
               text: ch.createdBy == me
                   ? 'Waiting for $oppName to accept…'
                   : 'Open the Arena tab to accept this duel.',
-              tone: BannerTone.info,
             ),
             const SizedBox(height: Sp.md),
           ],
@@ -175,8 +174,6 @@ class ChallengeDetailPage extends StatelessWidget {
                     ?.copyWith(color: c.inkFaint, letterSpacing: 1.2)),
             const SizedBox(height: Sp.md),
             AppCard(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: Sp.lg, vertical: Sp.lg),
               child: Column(
                 children: <Widget>[
                   for (final MapEntry<String, Map<String, bool>> day

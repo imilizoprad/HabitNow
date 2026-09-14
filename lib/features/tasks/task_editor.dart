@@ -129,11 +129,10 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
             controller: _note,
             hint: 'Notes (optional)',
             maxLength: 240,
-            minLines: 1,
             maxLines: 3,
           ),
           const SizedBox(height: Sp.xl),
-          _Label('CATEGORY'),
+          const _Label('CATEGORY'),
           const SizedBox(height: Sp.sm),
           Wrap(
             spacing: Sp.sm,
@@ -153,7 +152,7 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
             ],
           ),
           const SizedBox(height: Sp.xl),
-          _Label('PRIORITY'),
+          const _Label('PRIORITY'),
           const SizedBox(height: Sp.sm),
           Row(
             children: <Widget>[
@@ -183,7 +182,7 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
             ],
           ),
           const SizedBox(height: Sp.xl),
-          _Label('WHEN'),
+          const _Label('WHEN'),
           const SizedBox(height: Sp.sm),
           AppCard(
             padding: const EdgeInsets.symmetric(horizontal: Sp.lg, vertical: Sp.sm),
@@ -210,7 +209,7 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
             ),
           ),
           const SizedBox(height: Sp.xl),
-          _Label('REPEATS'),
+          const _Label('REPEATS'),
           const SizedBox(height: Sp.sm),
           Wrap(
             spacing: Sp.sm,

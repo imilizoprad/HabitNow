@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../app.dart';
@@ -130,8 +132,8 @@ class HabitsPage extends StatelessWidget {
     switch (action) {
       case 'open':
         if (!context.mounted) return;
-        Navigator.of(context).pushNamed(
-            '/habit', arguments: HabitRouteArgs(habit.id));
+        unawaited(Navigator.of(context).pushNamed(
+            '/habit', arguments: HabitRouteArgs(habit.id)));
       case 'edit':
         await showHabitEditor(context, app, existing: habit);
       case 'archive':

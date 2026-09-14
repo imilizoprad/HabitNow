@@ -94,7 +94,7 @@ class _FocusPageState extends State<FocusPage> {
       seconds: secs,
       habitId: _habitId,
     ));
-    Haptics.success();
+    unawaited(Haptics.success());
     _reset();
     if (mounted) {
       AppToast.show(context, message: 'Session saved · +focus', emoji: '🤿');

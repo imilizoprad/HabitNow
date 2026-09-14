@@ -8,8 +8,8 @@ import '../data/local_db.dart';
 import '../data/models/common.dart';
 import '../data/models/habit.dart';
 import '../data/score_engine.dart';
-import 'arena_store.dart';
 import 'app_store.dart';
+import 'arena_store.dart';
 
 /// Habits + their check-in ledger. Also owns the *mirror* habits that make
 /// cross-device challenges possible: when a challenge is accepted, both

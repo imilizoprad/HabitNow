@@ -157,7 +157,6 @@ class Celebration extends StatefulWidget {
   }) {
     return showDialog<void>(
       context: context,
-      barrierDismissible: true,
       barrierColor: Colors.black54,
       builder: (BuildContext ctx) => Celebration(
         emoji: emoji,
@@ -210,7 +209,7 @@ class _CelebrationState extends State<Celebration>
           ScaleTransition(
             scale: CurvedAnimation(
                     parent: _ctrl,
-                    curve: Interval(0.1, 0.6, curve: Motion.springy))
+                    curve: const Interval(0.1, 0.6, curve: Motion.springy))
                 .drive(Tween<double>(begin: 0.6, end: 1)),
             child: Container(
               padding: const EdgeInsets.all(Sp.xxl),

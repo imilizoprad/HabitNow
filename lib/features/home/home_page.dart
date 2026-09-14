@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../app.dart';
 import '../../app_routes.dart';
 import '../../core/theme/design_tokens.dart';
-import '../../core/widgets/avatar.dart';
 import '../../core/theme/palette.dart';
 import '../../core/utils/date_x.dart';
+import '../../core/widgets/avatar.dart';
 import '../../core/widgets/buttons.dart';
 import '../../core/widgets/entrance.dart';
 import '../../core/widgets/primitives.dart';
@@ -101,7 +101,6 @@ class HomePage extends StatelessWidget {
 
             // -- Today ring -------------------------------------------------
             Entrance(
-              index: 0,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: Sp.screenH),
@@ -304,7 +303,7 @@ class HomePage extends StatelessWidget {
             // -- Active challenges strip -------------------------------------
             if (app.arena.activeChallenges.isNotEmpty) ...<Widget>[
               SectionHeader('In the Arena', eyebrow: 'Challenges'),
-              SizedBox(
+              const SizedBox(
                 height: 116,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
@@ -525,7 +524,7 @@ class _ServeForfeitSheet extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              EmojiAvatar(emoji, seed: seed, size: 44),
+              EmojiAvatar(emoji, seed: seed),
               const SizedBox(width: Sp.md),
               Expanded(
                 child: Column(

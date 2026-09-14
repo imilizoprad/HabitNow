@@ -32,7 +32,7 @@ abstract final class JsonStore {
       }
     }
     final Directory fallback = Directory('./.habitnow');
-    if (!await fallback.exists()) {
+    if (!fallback.existsSync()) {
       await fallback.create(recursive: true);
     }
     _dir = fallback;
@@ -43,7 +43,7 @@ abstract final class JsonStore {
     try {
       final Directory dir = await directory();
       final File f = File('${dir.path}/$name.json');
-      if (!await f.exists()) return const <String, dynamic>{};
+      if (!f.existsSync()) return const <String, dynamic>{};
       final String raw = await f.readAsString();
       final dynamic decoded = jsonDecode(raw);
       if (decoded is Map<String, dynamic>) return decoded;

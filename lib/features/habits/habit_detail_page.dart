@@ -165,13 +165,11 @@ class HabitDetailPage extends StatelessWidget {
           const SizedBox(height: Sp.md),
           Center(
             child: AppCard(
-              padding: const EdgeInsets.all(Sp.lg),
               child: HabitHeatmap(
                 habitId: habit.id,
                 doneKeys: keys,
                 createdAtMs: habit.createdAt,
                 color: hue,
-                weeks: 16,
               ),
             ),
           ),
@@ -205,10 +203,9 @@ class HabitDetailPage extends StatelessWidget {
           ),
           if (habit.challengeId != null) ...<Widget>[
             const SizedBox(height: Sp.lg),
-            InfoBanner(
+            const InfoBanner(
               icon: Icons.handshake,
               text: 'This habit is shared — your friend sees every check-in.',
-              tone: BannerTone.info,
             ),
           ],
         ],
@@ -238,7 +235,6 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppColors c = context.colors;
     return AppCard(
-      padding: const EdgeInsets.all(Sp.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

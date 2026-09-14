@@ -165,7 +165,7 @@ class _ChallengeWizardState extends State<_ChallengeWizard> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _habitName = TextEditingController();
   int _iconIndex = 0;
-  int _seed = 1;
+  final int _seed = 1;
   int _stake = 25;
   int _days = 7;
   Set<int> _weekdays = const <int>{

@@ -80,7 +80,7 @@ class FrameReader {
   FrameReader({this.maxFrameBytes = 64 * 1024});
 
   final int maxFrameBytes;
-  final BytesBuilder _buf = BytesBuilder(copy: true);
+  final BytesBuilder _buf = BytesBuilder();
 
   /// Feeds raw socket bytes; returns every complete JSON message found.
   List<Map<String, dynamic>> push(List<int> chunk) {
@@ -90,7 +90,7 @@ class FrameReader {
     final ByteData bd = ByteData.sublistView(data);
     int cursor = 0;
     while (data.length - cursor >= 4) {
-      final int len = bd.getUint32(cursor, Endian.big);
+      final int len = bd.getUint32(cursor);
       if (len <= 0 || len > maxFrameBytes) {
         throw const FormatException('protocol: frame out of range');
       }
@@ -116,7 +116,7 @@ class FrameReader {
 Uint8List encodeFrame(Map<String, dynamic> message) {
   final Uint8List payload = Uint8List.fromList(utf8.encode(jsonEncode(message)));
   final Uint8List frame = Uint8List(4 + payload.length);
-  ByteData.sublistView(frame).setUint32(0, payload.length, Endian.big);
+  ByteData.sublistView(frame).setUint32(0, payload.length);
   frame.setAll(4, payload);
   return frame;
 }

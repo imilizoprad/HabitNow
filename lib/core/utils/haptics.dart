@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 
 /// Central haptic vocabulary so the whole app speaks one tactile language.
@@ -20,9 +22,9 @@ abstract final class Haptics {
   /// Success moments — a short double-tick pattern via two impacts.
   static Future<void> success() async {
     if (!enabled) return;
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     await Future<void>.delayed(const Duration(milliseconds: 90));
-    HapticFeedback.lightImpact();
+    unawaited(HapticFeedback.lightImpact());
   }
 
   static void warning() {

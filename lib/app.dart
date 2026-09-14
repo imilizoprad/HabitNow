@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'app_routes.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/palette.dart';
 import 'core/utils/haptics.dart';
 import 'core/widgets/toast.dart';
 import 'data/models/arena.dart';
-import 'app_routes.dart';
 import 'features/app_shell.dart';
 import 'features/onboarding/onboarding_page.dart';
 import 'state/app_store.dart';

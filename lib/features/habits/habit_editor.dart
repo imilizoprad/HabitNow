@@ -185,7 +185,7 @@ class _HabitEditorSheetState extends State<HabitEditorSheet> {
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: Sp.xl),
-          _Label('COLOR'),
+          const _Label('COLOR'),
           const SizedBox(height: Sp.sm),
           Row(
             children: <Widget>[
@@ -203,7 +203,7 @@ class _HabitEditorSheetState extends State<HabitEditorSheet> {
             ],
           ),
           const SizedBox(height: Sp.xl),
-          _Label('ICON'),
+          const _Label('ICON'),
           const SizedBox(height: Sp.sm),
           Wrap(
             spacing: Sp.sm,
@@ -222,7 +222,7 @@ class _HabitEditorSheetState extends State<HabitEditorSheet> {
             ],
           ),
           const SizedBox(height: Sp.xl),
-          _Label('DAYS'),
+          const _Label('DAYS'),
           const SizedBox(height: Sp.sm),
           Row(
             children: <Widget>[
@@ -287,7 +287,7 @@ class _HabitEditorSheetState extends State<HabitEditorSheet> {
             ],
           ),
           const SizedBox(height: Sp.xl),
-          _Label('REMINDER'),
+          const _Label('REMINDER'),
           const SizedBox(height: Sp.sm),
           AppCard(
             padding:

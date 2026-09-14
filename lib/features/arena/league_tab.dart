@@ -27,7 +27,7 @@ class LeagueTab extends StatelessWidget {
       return ListView(
         padding: const EdgeInsets.only(top: 40),
         children: <Widget>[
-          EmptyState(
+          const EmptyState(
             emoji: '🏅',
             title: 'The league is quiet',
             message:
@@ -50,7 +50,6 @@ class LeagueTab extends StatelessWidget {
             padding:
                 const EdgeInsets.fromLTRB(Sp.screenH, Sp.md, Sp.screenH, 0),
             child: Entrance(
-              index: 0,
               child: _Podium(top3: board.take(3).toList()),
             ),
           ),

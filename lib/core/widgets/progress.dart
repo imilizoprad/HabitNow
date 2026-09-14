@@ -199,11 +199,11 @@ class DuelBar extends StatelessWidget {
                     SizedBox(
                       width: w * v,
                       child:
-                          ColoredBox(color: colorA, child: SizedBox.expand()),
+                          ColoredBox(color: colorA, child: const SizedBox.expand()),
                     ),
                     Expanded(
                       child:
-                          ColoredBox(color: colorB, child: SizedBox.expand()),
+                          ColoredBox(color: colorB, child: const SizedBox.expand()),
                     ),
                   ],
                 );

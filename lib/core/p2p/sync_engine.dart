@@ -73,7 +73,7 @@ class SyncEngine {
 
   void _wire(PeerSession s) {
     s.onMessage = (Map<String, dynamic> m) => _onMessage(s, m);
-    s.onClosed = (PeerSession dead) => _onSessionClosed(dead);
+    s.onClosed = _onSessionClosed;
   }
 
   void _onMessage(PeerSession s, Map<String, dynamic> m) {

@@ -52,7 +52,6 @@ void seedStarterContent(LocalDb db) {
     title: 'Invite a friend to your first challenge',
     note: 'Open the Arena tab and pick someone nearby.',
     priority: Priority.medium,
-    category: TaskCategory.personal,
     createdAt: now,
     updatedAt: now,
     updatedBy: me,

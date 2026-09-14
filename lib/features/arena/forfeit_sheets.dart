@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../app.dart';
 import '../../core/theme/design_tokens.dart';
-import '../../core/utils/haptics.dart';
 import '../../core/theme/palette.dart';
 import '../../core/utils/date_x.dart';
+import '../../core/utils/haptics.dart';
 import '../../core/widgets/avatar.dart';
 import '../../core/widgets/buttons.dart';
 import '../../core/widgets/primitives.dart';

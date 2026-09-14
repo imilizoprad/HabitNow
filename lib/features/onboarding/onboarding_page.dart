@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../app.dart';
 import '../../core/theme/design_tokens.dart';
 import '../../core/theme/palette.dart';
-import '../../data/models/common.dart';
 import '../../core/utils/haptics.dart';
 import '../../core/widgets/avatar.dart';
 import '../../core/widgets/buttons.dart';
 import '../../core/widgets/entrance.dart';
 import '../../core/widgets/primitives.dart';
 import '../../core/widgets/text_field.dart';
-import '../../app.dart';
+import '../../data/models/common.dart';
 import '../../state/app_store.dart';
 
 /// Avatar faces offered during onboarding and profile editing.
@@ -140,20 +140,19 @@ class _WelcomeStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppColors c = context.colors;
     return Entrance(
-      index: 0,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Sp.xxl),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
+            const Row(
               children: <Widget>[
-                _Bubble('🏃', const Duration(milliseconds: 0)),
-                const SizedBox(width: Sp.md),
-                _Bubble('⚔️', const Duration(milliseconds: 180)),
-                const SizedBox(width: Sp.md),
-                _Bubble('🏆', const Duration(milliseconds: 360)),
+                _Bubble('🏃', Duration()),
+                SizedBox(width: Sp.md),
+                _Bubble('⚔️', Duration(milliseconds: 180)),
+                SizedBox(width: Sp.md),
+                _Bubble('🏆', Duration(milliseconds: 360)),
               ],
             ),
             const SizedBox(height: Sp.xxl),
@@ -258,7 +257,6 @@ class _IdentityStep extends StatelessWidget {
             hint: 'Your name',
             maxLength: 24,
             prefix: Text(emoji, style: const TextStyle(fontSize: 18)),
-            autofocus: false,
           ),
           const SizedBox(height: Sp.xl),
           Text('PICK A FACE',

@@ -13,7 +13,7 @@ class AppButton extends StatelessWidget {
     this.size = AppButtonSize.regular,
     this.icon,
     this.expanded = false,
-  })  : intent = _Intent.primary,
+  })  : intent = AppButtonIntent.primary,
         trailing = null;
 
   const AppButton.soft(
@@ -23,7 +23,7 @@ class AppButton extends StatelessWidget {
     this.size = AppButtonSize.regular,
     this.icon,
     this.expanded = false,
-  })  : intent = _Intent.soft,
+  })  : intent = AppButtonIntent.soft,
         trailing = null;
 
   const AppButton.ghost(
@@ -33,7 +33,7 @@ class AppButton extends StatelessWidget {
     this.size = AppButtonSize.regular,
     this.icon,
     this.expanded = false,
-  })  : intent = _Intent.ghost,
+  })  : intent = AppButtonIntent.ghost,
         trailing = null;
 
   const AppButton.danger(
@@ -43,13 +43,13 @@ class AppButton extends StatelessWidget {
     this.size = AppButtonSize.regular,
     this.icon,
     this.expanded = false,
-  })  : intent = _Intent.danger,
+  })  : intent = AppButtonIntent.danger,
         trailing = null;
 
   final String label;
   final VoidCallback? onTap;
   final AppButtonSize size;
-  final _Intent intent;
+  final AppButtonIntent intent;
   final IconData? icon;
   final IconData? trailing;
   final bool expanded;
@@ -59,10 +59,10 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppColors c = context.colors;
     final (Color bg, Color fg, Color? outline) = switch (intent) {
-      _Intent.primary => (c.primary, c.onPrimary, null),
-      _Intent.soft => (c.primarySoft, c.primaryDeep, null),
-      _Intent.ghost => (Colors.transparent, c.inkMuted, c.outline),
-      _Intent.danger => (c.dangerSoft, c.danger, null),
+      AppButtonIntent.primary => (c.primary, c.onPrimary, null),
+      AppButtonIntent.soft => (c.primarySoft, c.primaryDeep, null),
+      AppButtonIntent.ghost => (Colors.transparent, c.inkMuted, c.outline),
+      AppButtonIntent.danger => (c.dangerSoft, c.danger, null),
     };
     final double h = switch (size) {
       AppButtonSize.small => 38.0,
@@ -97,7 +97,7 @@ class AppButton extends StatelessWidget {
         height: h,
         padding: const EdgeInsets.symmetric(horizontal: Sp.xl),
         constraints:
-            expanded ? BoxConstraints(minWidth: double.infinity) : null,
+            expanded ? const BoxConstraints(minWidth: double.infinity) : null,
         decoration: BoxDecoration(
           color: bg,
           borderRadius: BorderRadius.circular(switch (size) {

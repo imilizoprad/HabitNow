@@ -36,7 +36,6 @@ linter:
     - prefer_if_null_operators
     - prefer_single_quotes
     - sort_child_properties_last
-    - sort_constructors_first
     - sort_unnamed_constructors_first
     - unawaited_futures
     - unnecessary_lambdas

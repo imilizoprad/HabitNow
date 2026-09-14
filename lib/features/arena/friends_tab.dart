@@ -42,7 +42,7 @@ class FriendsTab extends StatelessWidget {
         children: <Widget>[
           const RadarPlaceholder(),
           const SizedBox(height: Sp.sm),
-          EmptyState(
+          const EmptyState(
             emoji: '📡',
             title: 'Scanning the network',
             message:
@@ -156,7 +156,7 @@ class _PeerCard extends StatelessWidget {
     return AppCard(
       child: Row(
         children: <Widget>[
-          EmojiAvatar(emoji, seed: seed, size: 44, online: connected),
+          EmojiAvatar(emoji, seed: seed, online: connected),
           const SizedBox(width: Sp.lg),
           Expanded(
             child: Column(
@@ -215,7 +215,7 @@ class _FriendCard extends StatelessWidget {
           Row(
             children: <Widget>[
               EmojiAvatar(friend.emoji,
-                  seed: friend.colorSeed, size: 44, online: connected),
+                  seed: friend.colorSeed, online: connected),
               const SizedBox(width: Sp.lg),
               Expanded(
                 child: Column(
